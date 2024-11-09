@@ -52,6 +52,7 @@ function interet(solde, tauxInteret) {
 }
 function operationsHistorique(historiqueOperations) {
   if (historiqueOperations.length === 0) {
+    console.log("Historique des opérations : ");
     return console.log("Aucune opération n'a été effectuée.");
   } else {
     console.log("Historique des opérations : ");
