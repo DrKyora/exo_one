@@ -2,8 +2,6 @@ const tauxInteret = 0.03;
 let solde = 1000;
 let depot = 200;
 let retrait = 150;
-let nouveauDepot = 500;
-let nouveauRetrait = 800;
 let historiqueOperations = [];
 
 console.log("Solde initial : " + solde + "€");
