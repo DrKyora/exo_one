@@ -6,34 +6,63 @@ let nouveauDepot = 500;
 let nouveauRetrait = 800;
 let historiqueOperations = [];
 
-solde = solde + depot;
-historiqueOperations.push("Dépôt de " + depot + "€");
-console.log(solde + "€" + " est le nouveau solde après le dépôt.");
+console.log("Solde initial : " + solde + "€");
 
-if (solde > retrait) {
-  solde = solde - retrait;
-  historiqueOperations.push("Retrait de " + retrait + "€");
-  console.log("Vous avez retiré " + retrait + "€." + " Nouveau solde : " + solde + "€");
-} else {
-  console.log("Soldes insuffisant pour effectuer le retrait.");
+solde = addMoney(solde, depot);
+solde = removeMoney(solde, retrait);
+solde = interet(solde, tauxInteret);
+
+depot = 500;
+retrait = 800;
+
+solde = addMoney(solde, depot);
+solde = removeMoney(solde, retrait);
+solde = interet(solde, tauxInteret);
+operationsHistorique(historiqueOperations);
+
+resetSolde();
+console.log(`Votre solde actuel est de ${solde}€`);
+operationsHistorique(historiqueOperations);
+
+function addMoney(solde, depot) {
+  solde = solde + depot;
+  historiqueOperations.push(
+    `Dépôt de ${depot}€ fait le ${new Date().toLocaleDateString()} à ${new Date().toLocaleTimeString()}`
+  );
+  console.log(`${solde}€ est le nouveau solde après un dépôt de ${depot}€`);
+  return solde;
 }
-
-solde = solde * (1 + tauxInteret);
-console.log("Intérêts annuels de 3% ajoutés. Nouveau solde : " + solde + "€");
-
-solde = solde + nouveauDepot;
-historiqueOperations.push("Dépôt de " + nouveauDepot + "€");
-console.log(solde + "€" + " est le nouveau solde après le dépôt;");
-
-if (solde > nouveauRetrait) {
-  solde = solde - nouveauRetrait;
-  historiqueOperations.push("Retrait de " + nouveauRetrait + "€");
-  console.log("Vous avez retiré " + nouveauRetrait + "€." + " Nouveau solde : " + solde + "€");
-} else {
-  console.log("Soldes insuffisant pour effectuer le retrait.");
+function removeMoney(solde, retrait) {
+  if (solde > retrait) {
+    solde = solde - retrait;
+    historiqueOperations.push(
+      `Retrait de ${retrait}€ fait le ${new Date().toLocaleDateString()} à ${new Date().toLocaleTimeString()}`
+    );
+    console.log(`${solde}€ est le nouveau solde après un retrait de ${retrait}€`);
+    return solde;
+  } else {
+    return console.log("Soldes insuffisant pour effectuer le retrait.");
+  }
 }
-
-solde = solde * (1 + tauxInteret);
-console.log("Intérêts annuels de 3% ajoutés. Nouveau solde : " + solde + "€");
-
-console.log(historiqueOperations);
+function interet(solde, tauxInteret) {
+  solde = solde * (1 + tauxInteret);
+  //toFixed(2) limiter chiffres après la virgule à 2
+  //parseFloat pour reconvertir en nombre après toFixed
+  solde = parseFloat(solde.toFixed(2));
+  console.log(`${solde}€ est le nouveau solde après l'ajout des intérêts.`);
+  return solde;
+}
+function operationsHistorique(historiqueOperations) {
+  if (historiqueOperations.length === 0) {
+    return console.log("Aucune opération n'a été effectuée.");
+  } else {
+    console.log("Historique des opérations : ");
+    for (let i = 0; i < historiqueOperations.length; i++) {
+      console.log(historiqueOperations[i]);
+    }
+  }
+}
+function resetSolde() {
+  solde = 1000;
+  historiqueOperations = [];
+}
