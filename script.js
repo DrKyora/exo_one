@@ -1,10 +1,10 @@
 const tauxInteret = 0.03;
+const historiqueOperations = [];
 let solde = 1000;
 let depot = 200;
 let retrait = 150;
-let historiqueOperations = [];
 
-console.log("Solde initial : " + solde + "€");
+console.log(`Solde initial : ${solde}€`);
 
 solde = addMoney(solde, depot);
 solde = removeMoney(solde, retrait);
